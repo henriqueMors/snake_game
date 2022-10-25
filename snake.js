@@ -9,7 +9,7 @@ class Snake{
     }
 
     move(){
-        var newRect
+        var newRect;
         if (this.rotateX == 1){
             newRect = {
                 x: this.tail[this.tail.length - 1].x + this.size,
@@ -34,7 +34,7 @@ class Snake{
         }   
 
         this.tail.shift()
-        this.tail.push(newRect);
+        this.tail.push(newRect)
     }
 }
 
@@ -49,11 +49,12 @@ class Apple{
                 if(this.x == snake.tail[i].x && this.y == snake.tail[i].y){
                     isTouching = true
                 }
-            } if (!isTouching) {
+            }
+            this.size = snake.size
+            this.color = "pink"
+            if (!isTouching) {
                 break;
             }
-            this.color = "pink"
-            this.size = snake.size
         }
     }
 }
@@ -61,7 +62,7 @@ class Apple{
 
 var canvas = document.getElementById('canvas')
 
-var snake = new Snake();
+var snake = new Snake(20,20,20);
 
 var apple = new Apple();
 
@@ -81,8 +82,32 @@ function show(){
 }
 
 function update(){
+    canvasContext.clearRect(0,0, canvas.width, canvas.height)
+    console.log("update")
     snake.move()
+    eatApple()
+    checkHitWall();
+}
 
+function checkHitWall(){
+    var headTail = snake.tail[snake.tail.length -1]
+    if(headTail.x == - snake.size) {
+        headTail.x = canvas.width - snake.size
+    } else if(headTail.x == canvas.width) {
+        headTail.x = 0
+    } else if(headTail.y == - snake.size) {
+        headTail.y = canvas.height - snake.size
+    } else if(headTail.y == canvas.height) {
+        headTail.y = 0
+    }
+}
+
+function eatApple(){
+    if(snake.tail[snake.tail.length - 1].x == apple.x &&
+        snake.tail[snake.tail.length - 1].y == apple.y){
+            snake.tail[snake.tail.lenght] = {x:apple.x, y: apple.y}
+            apple = new Apple();
+        }
 }
 
 function draw(){
@@ -90,17 +115,16 @@ function draw(){
     createRect(0,0,canvas.width, canvas.height)
     for(var i=0; i < snake.tail.length; i++){
         createRect(snake.tail[i].x + 2.5, snake.tail[i].y + 2.5,
-            snake.size - 5, snake.size - 5, 'white')
+            snake.size - 5, snake.size - 5, 'yellow')
     }
 
     canvasContext.font = "20px Arial"
     canvasContext.fillStyle = "#00ff42"
-    canvasContext.fillText("Score: ", (snake.tail.lenght +1), 
-        canvas.width -120, 18);
+    canvasContext.fillText("Score: " + (snake.tail.lenght -1),canvas.width -120, 18);
     createRect(apple.x, apple.y, apple.size, apple.size, apple.color)
 }
 
-function createRect(x,y,width,height,color){
+function createRect(x,y,width, height,color){
     canvasContext.fillStyle = color
     canvasContext.fillRect(x,y,width,height)
 }
