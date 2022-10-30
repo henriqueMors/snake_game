@@ -1,3 +1,4 @@
+
 class Snake{
     constructor(x, y, size){
         this.x = x
@@ -6,6 +7,7 @@ class Snake{
         this.tail = [{x:this.x, y:this.y}]
         this.rotateX = 0
         this.rotateY = 1
+
     }
 
     move(){
@@ -16,7 +18,7 @@ class Snake{
                 y: this.tail[this.tail.length - 1].y
             }
 
-        } else if (this.rotateX == -1){
+        } else if (this.rotateX == - 1){
             newRect = {
                 x: this.tail[this.tail.length - 1].x - this.size,
                 y: this.tail[this.tail.length - 1].y
@@ -26,7 +28,7 @@ class Snake{
                 x: this.tail[this.tail.length - 1].x,
                 y: this.tail[this.tail.length - 1].y + this.size
             }
-        } else if (this.rotateX == -1){
+        } else if (this.rotateY == - 1){
             newRect = {
                 x: this.tail[this.tail.length - 1].x,
                 y: this.tail[this.tail.length - 1].y  - this.size
@@ -51,7 +53,8 @@ class Apple{
                 }
             }
             this.size = snake.size
-            this.color = "pink"
+            this.color = "green"
+            console.log(this.x, this.y)
             if (!isTouching) {
                 break;
             }
@@ -60,7 +63,7 @@ class Apple{
 }
 
 
-var canvas = document.getElementById('canvas')
+var canvas = document.getElementById("canvas")
 
 var snake = new Snake(20,20,20);
 
@@ -105,7 +108,7 @@ function checkHitWall(){
 function eatApple(){
     if(snake.tail[snake.tail.length - 1].x == apple.x &&
         snake.tail[snake.tail.length - 1].y == apple.y){
-            snake.tail[snake.tail.lenght] = {x:apple.x, y: apple.y}
+            snake.tail[snake.tail.lenght] = {x:apple.x, y:apple.y}
             apple = new Apple();
         }
 }
@@ -120,7 +123,8 @@ function draw(){
 
     canvasContext.font = "20px Arial"
     canvasContext.fillStyle = "#00ff42"
-    canvasContext.fillText("Score: " + (snake.tail.lenght -1),canvas.width -120, 18);
+    canvasContext.fillText("Score: " + (snake.tail.lenght + 1),
+        canvas.width -120, 18);
     createRect(apple.x, apple.y, apple.size, apple.size, apple.color)
 }
 
