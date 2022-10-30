@@ -54,9 +54,9 @@ class Apple{
                     isTouching = true
                 }
             }
+            console.log(this.x, this.y)
             this.size = snake.size
             this.color = "green"
-            console.log(this.x, this.y)
             if (!isTouching) {
                 break;
             }
@@ -78,7 +78,7 @@ window.onload = ()=>{
 }
 
 function gameLoop(){
-    setInterval(show, 1000/15) // refere-se ao intervalo FPS
+    setInterval(show, 1000/10) // refere-se ao intervalo FPS
 }
 
 function show(){
